@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <!--==================================================
+  ==== Core
+  ==================================================-->
+
+  <groupId>com.oliveryasuna</groupId>
+  <artifactId>vaadin24-jetty12-websocket-issue</artifactId>
+  <version>1.0.0</version>
+  <packaging>jar</packaging>
+
+  <modules/>
+
+  <properties>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
+
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+    <vaadin.version>24.1.3</vaadin.version>
+    <jetty.version>12.0.0.beta3</jetty.version>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>com.vaadin</groupId>
+        <artifactId>vaadin-bom</artifactId>
+        <version>${vaadin.version}</version>
+
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>org.eclipse.jetty.ee10</groupId>
+        <artifactId>jetty-ee10-bom</artifactId>
+        <version>${jetty.version}</version>
+
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <dependencies>
+    <!--=========================
+    ==== API
+    =========================-->
+
+    <dependency>
+      <groupId>jakarta.servlet</groupId>
+      <artifactId>jakarta.servlet-api</artifactId>
+      <version>6.0.0</version>
+    </dependency>
+
+    <!--=========================
+    ==== Vaadin
+    =========================-->
+
+    <dependency>
+      <groupId>com.vaadin</groupId>
+      <artifactId>vaadin-core</artifactId>
+    </dependency>
+
+    <!--=========================
+    ==== Jetty
+    =========================-->
+
+    <dependency>
+      <groupId>org.eclipse.jetty.ee10</groupId>
+      <artifactId>jetty-ee10-webapp</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.eclipse.jetty.ee10.websocket</groupId>
+      <artifactId>jetty-ee10-websocket-jakarta-server</artifactId>
+    </dependency>
+
+    <!--=========================
+    ==== Logging
+    =========================-->
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>2.0.7</version>
+    </dependency>
+
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <version>1.4.7</version>
+    </dependency>
+  </dependencies>
+
+  <!--==================================================
+  ==== Build
+  ==================================================-->
+
+  <build>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+
+        <filtering>true</filtering>
+      </resource>
+
+      <resource>
+        <directory>src/main/webapp</directory>
+        <targetPath>webapp</targetPath>
+      </resource>
+    </resources>
+
+    <plugins>
+      <plugin>
+        <groupId>com.vaadin</groupId>
+        <artifactId>vaadin-maven-plugin</artifactId>
+        <version>${vaadin.version}</version>
+
+        <executions>
+          <execution>
+            <goals>
+              <goal>prepare-frontend</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+  <reporting/>
+
+  <!--==================================================
+  ==== Details
+  ==================================================-->
+
+  <name>${project.groupId}:${project.artifactId}</name>
+  <description>Presents an issue with Vaadin 24 and embedded Jetty 12.</description>
+  <url>https://github.com/oliveryasuna/vaadin24-jetty12-websocket-issue</url>
+  <inceptionYear>2022</inceptionYear>
+  <licenses>
+    <license>
+      <name>BSD 3-Clause</name>
+      <url>https://opensource.org/licenses/BSD-3-Clause</url>
+      <comments>Copyright 2023 Oliver Yasuna</comments>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <organization>
+    <name>Oliver Yasuna</name>
+    <url>https://oliveryasuna.github.io/</url>
+  </organization>
+  <developers>
+    <developer>
+      <id>oliver-yasuna</id>
+
+      <name>Oliver Yasuna</name>
+      <url>https://oliveryasuna.github.io/</url>
+
+      <timezone>America/New_York</timezone>
+    </developer>
+  </developers>
+  <contributors/>
+
+  <!--==================================================
+  ==== Environment
+  ==================================================-->
+
+  <issueManagement>
+    <system>GitHub</system>
+    <url>https://github.com/oliveryasuna/vaadin24-jetty12-websocket-issue/issues</url>
+  </issueManagement>
+  <ciManagement/>
+
+  <mailingLists/>
+
+  <scm>
+    <url>https://github.com/oliveryasuna/vaadin24-jetty12-websocket-issue</url>
+    <connection>scm:git:git://github.com/oliveryasuna/vaadin24-jetty12-websocket-issue.git</connection>
+    <developerConnection>scm:git:git://github.com/oliveryasuna/vaadin24-jetty12-websocket-issue.git</developerConnection>
+  </scm>
+
+  <repositories/>
+  <pluginRepositories/>
+
+  <distributionManagement/>
+
+  <profiles>
+    <profile>
+      <id>production</id>
+
+      <properties>
+        <vaadin.productionMode>true</vaadin.productionMode>
+      </properties>
+
+      <dependencies>
+        <dependency>
+          <groupId>com.vaadin</groupId>
+          <artifactId>vaadin-core</artifactId>
+
+          <exclusions>
+            <exclusion>
+              <groupId>com.vaadin</groupId>
+              <artifactId>vaadin-dev-server</artifactId>
+            </exclusion>
+          </exclusions>
+        </dependency>
+      </dependencies>
+
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-maven-plugin</artifactId>
+            <version>${vaadin.version}</version>
+
+            <configuration>
+              <forceProductionBuild>true</forceProductionBuild>
+            </configuration>
+
+            <executions>
+              <execution>
+                <phase>compile</phase>
+
+                <goals>
+                  <goal>build-frontend</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+
+</project>
